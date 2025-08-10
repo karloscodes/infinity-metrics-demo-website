@@ -157,6 +157,10 @@
           data-infinity-metadata-format="pdf">
           Download Guide (HTML Attribute Tracking)
         </button>
+
+        <button class="cta-button" id="buy-premium-btn">
+          Buy Premium Plan ($19.99)
+        </button>
       </div>
     </div>
 
@@ -180,6 +184,25 @@
         console.log('Infinity Metrics not yet loaded, event queued:', eventName, eventData);
       }
     };
+
+    // Revenue event handler
+    document.addEventListener('DOMContentLoaded', function () {
+      var buyBtn = document.getElementById('buy-premium-btn');
+      if (buyBtn) {
+        buyBtn.addEventListener('click', function () {
+          if (window.InfinityMetrics && window.InfinityMetrics.registerPurchase) {
+            window.InfinityMetrics.registerPurchase(1999, 'USD', {
+              product_id: 'premium_plan',
+              product_name: 'Premium Plan',
+              quantity: 1
+            });
+            console.log('Purchase event sent: Premium Plan');
+          } else {
+            console.log('Infinity Metrics not yet loaded, purchase event queued');
+          }
+        });
+      }
+    });
 
     // Track scroll events
     var scrollTracked = false;
