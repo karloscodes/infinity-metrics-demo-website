@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Infinity Metrics Demo</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 800px;
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      padding: 40px;
+      text-align: center;
+    }
+
+    h1 {
+      color: #2c3e50;
+      font-size: 3rem;
+      margin-bottom: 20px;
+      font-weight: 300;
+    }
+
+    .subtitle {
+      color: #7f8c8d;
+      font-size: 1.2rem;
+      margin-bottom: 40px;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px;
+      margin: 40px 0;
+    }
+
+    .feature {
+      padding: 20px;
+      background: #f8f9fa;
+      border-radius: 10px;
+      transition: transform 0.3s ease;
+    }
+
+    .feature:hover {
+      transform: translateY(-5px);
+    }
+
+    .feature h3 {
+      color: #3498db;
+      margin-bottom: 10px;
+    }
+
+    .cta-button {
+      display: inline-block;
+      background: linear-gradient(45deg, #3498db, #2980b9);
+      color: white;
+      padding: 15px 30px;
+      text-decoration: none;
+      border-radius: 25px;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      margin: 20px 10px;
+    }
+
+    .cta-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+    }
+
+    .demo-section {
+      margin: 40px 0;
+      padding: 30px;
+      background: #ecf0f1;
+      border-radius: 10px;
+    }
+
+    .metrics-info {
+      color: #7f8c8d;
+      font-size: 0.9rem;
+      margin-top: 20px;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      .container {
+        padding: 20px;
+      }
+
+      .features {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>🚀 Infinity Metrics Demo</h1>
+    <p class="subtitle">Experience powerful analytics and user tracking in action</p>
+
+    <div class="features">
+      <div class="feature">
+        <h3>📊 Real-time Analytics</h3>
+        <p>Track user interactions and behaviors as they happen on your website.</p>
+      </div>
+      <div class="feature">
+        <h3>🎯 User Insights</h3>
+        <p>Gain deep understanding of your audience with detailed user analytics.</p>
+      </div>
+      <div class="feature">
+        <h3>⚡ Lightning Fast</h3>
+        <p>Optimized for performance with minimal impact on page load times.</p>
+      </div>
+    </div>
+
+    <div class="demo-section">
+      <h2>Interactive Demo</h2>
+      <p>This page is instrumented with Infinity Metrics. Try clicking around, scrolling, and interacting with the
+        elements below to see the tracking in action!</p>
+
+      <a href="#" class="cta-button"
+        onclick="trackEvent('demo_button_clicked', { button_id: 'demo_button_1', location: 'demo_section' })">Track This
+        Click</a>
+      <a href="#" class="cta-button"
+        onclick="trackEvent('demo_button_clicked', { button_id: 'demo_button_2', location: 'demo_section' })">Another
+        Trackable Action</a>
+
+      <div style="margin-top: 20px;">
+        <button class="cta-button" data-infinity-event-name="newsletter_signup"
+          data-infinity-metadata-source="demo_page">
+          Subscribe to Newsletter (HTML Attribute Tracking)
+        </button>
+
+        <button class="cta-button" data-infinity-event-name="download_started" data-infinity-metadata-file="demo_guide"
+          data-infinity-metadata-format="pdf">
+          Download Guide (HTML Attribute Tracking)
+        </button>
+      </div>
+    </div>
+
+    <div class="metrics-info">
+      <p><strong>Infinity Metrics</strong> is actively tracking this page.</p>
+      <p>Connected to: <code>demo-007.getinfinitymetrics.com</code></p>
+    </div>
+  </div>
+
+  <!-- Infinity Metrics Script -->
+  <script>
+    // Configure Infinity Metrics before loading
+    window.InfinityMetrics = window.InfinityMetrics || {};
+
+    // Custom event tracking function
+    window.trackEvent = function (eventName, eventData) {
+      if (window.InfinityMetrics && window.InfinityMetrics.sendCustomEvent) {
+        window.InfinityMetrics.sendCustomEvent(eventName, eventData);
+        console.log('Event tracked:', eventName, eventData);
+      } else {
+        console.log('Infinity Metrics not yet loaded, event queued:', eventName, eventData);
+      }
+    };
+
+    // Track scroll events
+    var scrollTracked = false;
+    window.addEventListener('scroll', function () {
+      if (!scrollTracked && window.scrollY > 100) {
+        trackEvent('scroll_engaged', {
+          scroll_depth: window.scrollY,
+          page_height: document.body.scrollHeight
+        });
+        scrollTracked = true;
+      }
+    });
+  </script>
+  <script defer src="https://demo-007.getinfinitymetrics.com/api/v1/sdk.js"></script>
+</body>
+
+</html>
